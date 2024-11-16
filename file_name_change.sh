@@ -21,3 +21,16 @@ for file in "$SOURCE_DIR"/*;do
 done
 
 tar -czf $TAR_FILE" -C "$TARGET_DIR"
+if [[ -f "$TAR_FILE" ]]; then
+    echo "Please find the attached tar file." | mail -s "Tar File Report - $DATE" -a "$TAR_FILE" "$EMAIL"
+    if [[ $? -eq 0 ]]; then
+        echo "Email sent to $EMAIL with the tar file: $TAR_FILE"
+    else
+        echo "Failed to send email. Please check your mail configuration."
+    fi
+else
+    echo "Tar file not found. Email not sent."
+fi
+
+# Exit the script
+exit 0
